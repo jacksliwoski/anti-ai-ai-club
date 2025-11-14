@@ -59,8 +59,8 @@ router.post('/protect', upload.single('audioFile'), async (req, res) => {
       additionalInfo: req.body.additionalInfo || ''
     };
 
-    console.log(`🔒 Processing protection for: ${req.file.originalname}`);
-    console.log(`   Protection level: ${options.protectionLevel}`);
+    console.log(`Processing protection for: ${req.file.originalname}`);
+    console.log(`Protection level: ${options.protectionLevel}`);
 
     let result;
     let adversarialProtection = null;
@@ -76,11 +76,11 @@ router.post('/protect', upload.single('audioFile'), async (req, res) => {
       const pythonAvailable = await checkPythonService();
 
       if (!pythonAvailable) {
-        console.warn('⚠️  Python service unavailable, falling back to metadata-only protection');
+        console.warn('Python service unavailable, falling back to metadata-only protection');
         result = await protectAudioFile(req.file.path, options);
         protectedFilePath = result.outputPath;
       } else {
-        console.log('🛡️  Applying adversarial watermarking...');
+        console.log('Applying adversarial watermarking...');
         adversarialProtection = await applyAdversarialProtection(req.file.path, {
           artistName: options.artistName,
           trackTitle: options.trackTitle,
@@ -91,7 +91,7 @@ router.post('/protect', upload.single('audioFile'), async (req, res) => {
         const pythonOutputPath = path.join(__dirname, '../../uploads', adversarialProtection.output_file);
 
         // Apply metadata on top of adversarially protected audio
-        console.log('📝 Adding metadata protection...');
+        console.log('Adding metadata protection...');
         result = await protectAudioFile(pythonOutputPath, options);
         protectedFilePath = result.outputPath;
 

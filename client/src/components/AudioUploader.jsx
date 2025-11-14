@@ -21,9 +21,11 @@ const AudioUploader = ({ onProtectionComplete }) => {
     fetchProtectionLevels();
   }, []);
 
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
   const fetchProtectionLevels = async () => {
     try {
-      const response = await axios.get('/api/audio/protection-levels');
+      const response = await axios.get(`${API_URL}/api/audio/protection-levels`);
       setProtectionLevels(response.data.levels);
       setPythonAvailable(response.data.pythonServiceAvailable);
 
@@ -111,7 +113,7 @@ const AudioUploader = ({ onProtectionComplete }) => {
       formData.append('protectionLevel', protectionLevel);
       formData.append('additionalInfo', additionalInfo);
 
-      const response = await axios.post('/api/audio/protect', formData, {
+      const response = await axios.post(`${API_URL}/api/audio/protect`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

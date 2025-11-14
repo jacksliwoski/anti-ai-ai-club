@@ -178,8 +178,8 @@ async function protectVorbisFormat(inputPath, outputPath, protectionData, format
   // or command-line tools like metaflac or vorbiscomment
   // This would be implemented with exec() and those tools
 
-  console.log(`⚠️  FLAC/OGG protection requires metaflac/vorbiscomment tools`);
-  console.log(`    File copied but metadata protection limited for ${format} format`);
+  console.log(`WARNING: FLAC/OGG protection requires metaflac/vorbiscomment tools`);
+  console.log(`File copied but metadata protection limited for ${format} format`);
 
   return outputPath;
 }
@@ -192,8 +192,8 @@ async function protectWAV(inputPath, outputPath, protectionData) {
   // Copy file
   fs.copyFileSync(inputPath, outputPath);
 
-  console.log(`⚠️  WAV format has limited metadata support`);
-  console.log(`    Consider converting to FLAC for better protection`);
+  console.log(`WARNING: WAV format has limited metadata support`);
+  console.log(`Consider converting to FLAC for better protection`);
 
   return outputPath;
 }
@@ -208,8 +208,8 @@ async function protectM4A(inputPath, outputPath, protectionData) {
   // Note: M4A metadata writing requires specialized libraries like mp4v2 or ffmpeg
   // This would be implemented with ffmpeg metadata options
 
-  console.log(`⚠️  M4A/AAC protection requires ffmpeg or specialized libraries`);
-  console.log(`    File copied but metadata protection limited`);
+  console.log(`WARNING: M4A/AAC protection requires ffmpeg or specialized libraries`);
+  console.log(`File copied but metadata protection limited`);
 
   return outputPath;
 }
@@ -218,7 +218,7 @@ async function protectM4A(inputPath, outputPath, protectionData) {
  * Format protection data as a human-readable comment
  */
 function formatProtectionComment(data) {
-  return `🛡️ AI TRAINING PROTECTION
+  return `AI TRAINING PROTECTION
 
 This audio file is protected from unauthorized AI training and commercial exploitation.
 
