@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './AudioUploader.css';
 
@@ -6,12 +6,38 @@ const AudioUploader = ({ onProtectionComplete }) => {
   const [file, setFile] = useState(null);
   const [artistName, setArtistName] = useState('');
   const [trackTitle, setTrackTitle] = useState('');
-  const [protectionLevel, setProtectionLevel] = useState('metadata');
+  const [protectionLevel, setProtectionLevel] = useState('medium');
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
   const [dragActive, setDragActive] = useState(false);
+  const [protectionLevels, setProtectionLevels] = useState(null);
+  const [pythonAvailable, setPythonAvailable] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Fetch protection levels on component mount
+  useEffect(() => {
+    fetchProtectionLevels();
+  }, []);
+
+  const fetchProtectionLevels = async () => {
+    try {
+      const response = await axios.get('/api/audio/protection-levels');
+      setProtectionLevels(response.data.levels);
+      setPythonAvailable(response.data.pythonServiceAvailable);
+
+      // Set default to medium if available, otherwise metadata
+      if (response.data.pythonServiceAvailable) {
+        setProtectionLevel('medium');
+      } else {
+        setProtectionLevel('metadata');
+      }
+    } catch (err) {
+      console.error('Failed to fetch protection levels:', err);
+      setPythonAvailable(false);
+      setProtectionLevel('metadata');
+    }
+  };
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -108,9 +134,21 @@ const AudioUploader = ({ onProtectionComplete }) => {
     }
   };
 
+  const getLevelInfo = (levelKey) => {
+    return protectionLevels?.[levelKey] || null;
+  };
+
+  const currentLevelInfo = getLevelInfo(protectionLevel);
+
   return (
     <section className="uploader-section">
       <h2>Protect Your Audio</h2>
+
+      {!pythonAvailable && (
+        <div className="warning-banner">
+          ⚠️ Adversarial protection unavailable - Python service not running. Using metadata-only protection.
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="upload-form">
         <div
@@ -176,13 +214,37 @@ const AudioUploader = ({ onProtectionComplete }) => {
               value={protectionLevel}
               onChange={(e) => setProtectionLevel(e.target.value)}
             >
-              <option value="metadata">Metadata Only (Recommended)</option>
-              <option value="watermark">Metadata + Watermark (Coming Soon)</option>
-              <option value="full">Full Protection (Coming Soon)</option>
+              {protectionLevels && Object.entries(protectionLevels).map(([key, level]) => (
+                <option key={key} value={key} disabled={!level.available}>
+                  {level.name} {level.recommended ? '(Recommended)' : ''}
+                  {!level.available ? ' (Unavailable)' : ''}
+                </option>
+              ))}
             </select>
-            <p className="field-help">
-              Metadata protection embeds rights information without affecting audio quality
-            </p>
+
+            {currentLevelInfo && (
+              <div className="protection-level-info">
+                <p className="level-description">{currentLevelInfo.use_case}</p>
+                <div className="level-stats">
+                  <div className="stat">
+                    <span className="stat-label">AI Degradation:</span>
+                    <span className="stat-value">
+                      {typeof currentLevelInfo.ai_degradation === 'object'
+                        ? `${currentLevelInfo.ai_degradation.min}-${currentLevelInfo.ai_degradation.max}%`
+                        : currentLevelInfo.ai_degradation}
+                    </span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-label">Quality:</span>
+                    <span className="stat-value">{currentLevelInfo.imperceptibility}</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-label">Processing:</span>
+                    <span className="stat-value">{currentLevelInfo.processing_time}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="form-group">

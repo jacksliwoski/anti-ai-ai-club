@@ -5,12 +5,14 @@
   "main": "server/index.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run python\" \"npm run server\" \"npm run client\"",
+    "python": "cd python-service && python app.py",
     "server": "nodemon server/index.js",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
     "start": "node server/index.js",
-    "install-all": "npm install && cd client && npm install"
+    "install-all": "npm install && cd client && npm install && cd ../python-service && pip install -r requirements.txt",
+    "setup-python": "cd python-service && pip install -r requirements.txt"
   },
   "keywords": [
     "audio",
@@ -28,7 +30,9 @@
     "music-metadata": "^9.0.0",
     "node-id3": "^0.2.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.0",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
