@@ -13,6 +13,7 @@ const AudioUploader = ({ onProtectionComplete }) => {
   const [dragActive, setDragActive] = useState(false);
   const [protectionLevels, setProtectionLevels] = useState(null);
   const [pythonAvailable, setPythonAvailable] = useState(false);
+  const [loadingLevels, setLoadingLevels] = useState(true);
   const fileInputRef = useRef(null);
 
   // Fetch protection levels on component mount
@@ -36,6 +37,8 @@ const AudioUploader = ({ onProtectionComplete }) => {
       console.error('Failed to fetch protection levels:', err);
       setPythonAvailable(false);
       setProtectionLevel('metadata');
+    } finally {
+      setLoadingLevels(false);
     }
   };
 
@@ -93,7 +96,7 @@ const AudioUploader = ({ onProtectionComplete }) => {
     }
 
     if (!artistName.trim()) {
-      setError('Please enter artist name');
+      setError('Artist name is required');
       return;
     }
 
@@ -140,13 +143,29 @@ const AudioUploader = ({ onProtectionComplete }) => {
 
   const currentLevelInfo = getLevelInfo(protectionLevel);
 
+  if (loadingLevels) {
+    return (
+      <section className="uploader-section">
+        <div className="loading-state">
+          <div className="spinner"></div>
+          <p>Loading protection options...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="uploader-section">
-      <h2>Protect Your Audio</h2>
+      <div className="section-header">
+        <h3>Protect audio file</h3>
+        <p className="section-description">
+          Upload your audio file to add adversarial protection that prevents unauthorized AI training
+        </p>
+      </div>
 
       {!pythonAvailable && (
-        <div className="warning-banner">
-          ⚠️ Adversarial protection unavailable - Python service not running. Using metadata-only protection.
+        <div className="alert alert-warning">
+          <strong>Limited protection mode:</strong> Advanced adversarial protection unavailable. Only metadata protection is active.
         </div>
       )}
 
@@ -165,50 +184,59 @@ const AudioUploader = ({ onProtectionComplete }) => {
             accept=".mp3,.flac,.wav,.m4a,.aac,.ogg,audio/*"
             onChange={handleFileInputChange}
             style={{ display: 'none' }}
+            aria-label="Audio file upload"
           />
 
           {file ? (
             <div className="file-selected">
-              <span className="file-icon">🎵</span>
+              <svg className="file-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18V5l12-2v13M9 13l12-2"/>
+              </svg>
               <p className="file-name">{file.name}</p>
               <p className="file-size">{(file.size / (1024 * 1024)).toFixed(2)} MB</p>
             </div>
           ) : (
             <div className="drop-zone-content">
-              <span className="upload-icon">⬆️</span>
-              <p>Drag & drop your audio file here</p>
-              <p className="or-text">or click to browse</p>
-              <p className="supported-formats">Supports: MP3, FLAC, WAV, M4A, AAC, OGG</p>
+              <svg className="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+              <p className="drop-zone-text">Drag and drop your audio file here</p>
+              <p className="drop-zone-or">or</p>
+              <button type="button" className="btn btn-secondary btn-sm">Choose file</button>
+              <p className="supported-formats">Supports MP3, FLAC, WAV, M4A, AAC, OGG (max 100MB)</p>
             </div>
           )}
         </div>
 
         <div className="form-fields">
           <div className="form-group">
-            <label htmlFor="artistName">Artist Name *</label>
+            <label htmlFor="artistName">
+              Artist name <span className="required">*</span>
+            </label>
             <input
               id="artistName"
               type="text"
               value={artistName}
               onChange={(e) => setArtistName(e.target.value)}
-              placeholder="Your artist or band name"
+              placeholder="Enter artist or band name"
               required
+              className={error && !artistName.trim() ? 'error' : ''}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="trackTitle">Track Title</label>
+            <label htmlFor="trackTitle">Track title</label>
             <input
               id="trackTitle"
               type="text"
               value={trackTitle}
               onChange={(e) => setTrackTitle(e.target.value)}
-              placeholder="Song or track name (optional)"
+              placeholder="Enter track name (optional)"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="protectionLevel">Protection Level</label>
+            <label htmlFor="protectionLevel">Protection level</label>
             <select
               id="protectionLevel"
               value={protectionLevel}
@@ -216,7 +244,8 @@ const AudioUploader = ({ onProtectionComplete }) => {
             >
               {protectionLevels && Object.entries(protectionLevels).map(([key, level]) => (
                 <option key={key} value={key} disabled={!level.available}>
-                  {level.name} {level.recommended ? '(Recommended)' : ''}
+                  {level.name}
+                  {level.recommended ? ' (Recommended)' : ''}
                   {!level.available ? ' (Unavailable)' : ''}
                 </option>
               ))}
@@ -227,7 +256,7 @@ const AudioUploader = ({ onProtectionComplete }) => {
                 <p className="level-description">{currentLevelInfo.use_case}</p>
                 <div className="level-stats">
                   <div className="stat">
-                    <span className="stat-label">AI Degradation:</span>
+                    <span className="stat-label">AI degradation</span>
                     <span className="stat-value">
                       {typeof currentLevelInfo.ai_degradation === 'object'
                         ? `${currentLevelInfo.ai_degradation.min}-${currentLevelInfo.ai_degradation.max}%`
@@ -235,11 +264,11 @@ const AudioUploader = ({ onProtectionComplete }) => {
                     </span>
                   </div>
                   <div className="stat">
-                    <span className="stat-label">Quality:</span>
+                    <span className="stat-label">Audio quality</span>
                     <span className="stat-value">{currentLevelInfo.imperceptibility}</span>
                   </div>
                   <div className="stat">
-                    <span className="stat-label">Processing:</span>
+                    <span className="stat-label">Processing time</span>
                     <span className="stat-value">{currentLevelInfo.processing_time}</span>
                   </div>
                 </div>
@@ -248,29 +277,37 @@ const AudioUploader = ({ onProtectionComplete }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="additionalInfo">Additional Information (Optional)</label>
+            <label htmlFor="additionalInfo">Additional information</label>
             <textarea
               id="additionalInfo"
               value={additionalInfo}
               onChange={(e) => setAdditionalInfo(e.target.value)}
-              placeholder="Any additional rights or licensing information"
+              placeholder="Optional: Add licensing details or usage restrictions"
               rows="3"
             />
+            <p className="field-help">This information will be embedded in the file metadata</p>
           </div>
         </div>
 
         {error && (
-          <div className="error-message">
-            ⚠️ {error}
+          <div className="alert alert-error">
+            <strong>Error:</strong> {error}
           </div>
         )}
 
         <button
           type="submit"
-          className="protect-button"
+          className="btn btn-primary btn-lg"
           disabled={uploading || !file}
         >
-          {uploading ? '🔒 Protecting...' : '🛡️ Protect Audio File'}
+          {uploading ? (
+            <>
+              <span className="spinner spinner-sm"></span>
+              Processing file...
+            </>
+          ) : (
+            'Protect file'
+          )}
         </button>
       </form>
     </section>
