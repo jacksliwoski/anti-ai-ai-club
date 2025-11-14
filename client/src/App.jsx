@@ -14,18 +14,18 @@ function App() {
     <div className="App">
       <header className="app-header">
         <div className="header-content">
-          <h1>🎵 Anti AI AI Club</h1>
-          <p className="tagline">Protect Your Music from Unauthorized AI Training</p>
+          <h1>Audio Protection Platform</h1>
+          <p className="tagline">Protect your music from unauthorized AI training</p>
         </div>
       </header>
 
       <main className="main-content">
         <div className="container">
           <section className="hero-section">
-            <h2>Safeguard Your Artistic Rights</h2>
+            <h2>Safeguard your artistic rights</h2>
             <p>
-              Embed protection metadata into your audio files to prevent unauthorized
-              AI training and commercial exploitation - without affecting audio quality.
+              Add adversarial protection to your audio files that actively disrupts unauthorized
+              AI training while maintaining perfect audio quality.
             </p>
           </section>
 
@@ -35,28 +35,31 @@ function App() {
 
           {protectedFiles.length > 0 && (
             <section className="protected-files-section">
-              <h2>Recently Protected Files</h2>
+              <h3>Protected files</h3>
               <div className="protected-files-list">
                 {protectedFiles.map((file, index) => (
                   <div key={index} className="protected-file-card">
                     <div className="file-info">
-                      <span className="file-icon">🛡️</span>
                       <div className="file-details">
-                        <h3>{file.originalFilename}</h3>
-                        <p className="protection-status">
-                          Protected • {new Date(file.protection.timestamp).toLocaleString()}
+                        <h4>{file.originalFilename}</h4>
+                        <p className="file-meta">
+                          <span className="protection-status">Protected</span>
+                          <span className="file-meta-divider">•</span>
+                          <span className="file-timestamp">
+                            {new Date(file.protection.timestamp).toLocaleString()}
+                          </span>
                         </p>
-                        <p className="signature">
-                          Signature: {file.protection.signature}
+                        <p className="file-signature">
+                          {file.protection.signature}
                         </p>
                       </div>
                     </div>
                     <a
                       href={`http://localhost:3001${file.downloadUrl}`}
-                      className="download-button"
+                      className="btn btn-secondary btn-sm"
                       download
                     >
-                      Download Protected File
+                      Download file
                     </a>
                   </div>
                 ))}
@@ -67,9 +70,9 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>
-          Protecting artists' rights in the AI era • Built with ❤️ for creators
-        </p>
+        <div className="footer-content">
+          <p>Protecting artists' rights in the AI era</p>
+        </div>
       </footer>
     </div>
   );

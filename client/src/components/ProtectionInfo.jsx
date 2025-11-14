@@ -10,54 +10,57 @@ const ProtectionInfo = () => {
         <button
           className={`tab ${activeTab === 'how' ? 'active' : ''}`}
           onClick={() => setActiveTab('how')}
+          aria-selected={activeTab === 'how'}
         >
-          How It Works
+          How it works
         </button>
         <button
           className={`tab ${activeTab === 'why' ? 'active' : ''}`}
           onClick={() => setActiveTab('why')}
+          aria-selected={activeTab === 'why'}
         >
-          Why Protect
+          Why protect
         </button>
         <button
           className={`tab ${activeTab === 'tech' ? 'active' : ''}`}
           onClick={() => setActiveTab('tech')}
+          aria-selected={activeTab === 'tech'}
         >
-          Technical Details
+          Technical details
         </button>
       </div>
 
       <div className="info-content">
         {activeTab === 'how' && (
           <div className="info-panel">
-            <h3>How Audio Protection Works</h3>
+            <h4>How audio protection works</h4>
             <div className="steps">
               <div className="step">
                 <span className="step-number">1</span>
                 <div className="step-content">
-                  <h4>Upload Your Audio</h4>
+                  <h5>Upload audio file</h5>
                   <p>Upload your original audio file in any supported format (MP3, FLAC, WAV, etc.)</p>
                 </div>
               </div>
               <div className="step">
                 <span className="step-number">2</span>
                 <div className="step-content">
-                  <h4>Metadata Embedding</h4>
+                  <h5>Protection applied</h5>
                   <p>
-                    We embed standardized protection markers into your file's metadata, including:
+                    Standardized protection markers are embedded into your file's metadata:
                   </p>
                   <ul>
                     <li>AI training opt-out declarations</li>
                     <li>Rights and copyright information</li>
                     <li>Cryptographic signatures for verification</li>
-                    <li>Content provenance data (who, when, what)</li>
+                    <li>Content provenance data</li>
                   </ul>
                 </div>
               </div>
               <div className="step">
                 <span className="step-number">3</span>
                 <div className="step-content">
-                  <h4>Download & Distribute</h4>
+                  <h5>Download protected file</h5>
                   <p>
                     Download your protected file with zero quality loss. The protection
                     metadata travels with your file wherever it goes.
@@ -70,35 +73,31 @@ const ProtectionInfo = () => {
 
         {activeTab === 'why' && (
           <div className="info-panel">
-            <h3>Why Protect Your Music</h3>
+            <h4>Why protect your music</h4>
             <div className="reasons">
               <div className="reason">
-                <span className="reason-icon">⚖️</span>
-                <h4>Legal Protection</h4>
+                <h5>Legal protection</h5>
                 <p>
                   Embed clear opt-out declarations that establish your intent to prohibit
                   AI training on your work. This creates a legal record of your rights.
                 </p>
               </div>
               <div className="reason">
-                <span className="reason-icon">🎨</span>
-                <h4>Artistic Integrity</h4>
+                <h5>Artistic integrity</h5>
                 <p>
                   Prevent your unique sound and style from being copied by AI models
                   without your consent or compensation.
                 </p>
               </div>
               <div className="reason">
-                <span className="reason-icon">💰</span>
-                <h4>Economic Rights</h4>
+                <h5>Economic rights</h5>
                 <p>
                   Protect your ability to monetize your own work and maintain control
                   over how your music is used commercially.
                 </p>
               </div>
               <div className="reason">
-                <span className="reason-icon">🔍</span>
-                <h4>Transparency</h4>
+                <h5>Transparency</h5>
                 <p>
                   Make it clear to platforms, researchers, and AI companies that your
                   content is off-limits for training purposes.
@@ -110,25 +109,25 @@ const ProtectionInfo = () => {
 
         {activeTab === 'tech' && (
           <div className="info-panel">
-            <h3>Technical Details</h3>
+            <h4>Technical details</h4>
             <div className="tech-details">
               <div className="tech-section">
-                <h4>Protection Standards</h4>
+                <h5>Protection standards</h5>
                 <ul>
-                  <li><strong>AI Training Opt-Out:</strong> Clear machine-readable markers</li>
-                  <li><strong>C2PA-Inspired Provenance:</strong> Chain of custody metadata</li>
-                  <li><strong>Cryptographic Signatures:</strong> SHA-256 based verification</li>
-                  <li><strong>ISO-8601 Timestamps:</strong> Precise protection dating</li>
+                  <li><strong>AI training opt-out:</strong> Clear machine-readable markers</li>
+                  <li><strong>C2PA-inspired provenance:</strong> Chain of custody metadata</li>
+                  <li><strong>Cryptographic signatures:</strong> SHA-256 based verification</li>
+                  <li><strong>ISO-8601 timestamps:</strong> Precise protection dating</li>
                 </ul>
               </div>
 
               <div className="tech-section">
-                <h4>Supported Formats</h4>
+                <h5>Supported formats</h5>
                 <table className="format-table">
                   <thead>
                     <tr>
                       <th>Format</th>
-                      <th>Metadata Support</th>
+                      <th>Metadata support</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -136,7 +135,7 @@ const ProtectionInfo = () => {
                     <tr>
                       <td>MP3</td>
                       <td>ID3v2 tags</td>
-                      <td className="status-full">Full Support</td>
+                      <td className="status-full">Full support</td>
                     </tr>
                     <tr>
                       <td>FLAC</td>
@@ -163,7 +162,7 @@ const ProtectionInfo = () => {
               </div>
 
               <div className="tech-section">
-                <h4>What Gets Embedded</h4>
+                <h5>Embedded metadata</h5>
                 <pre className="code-block">
 {`{
   "ai_training_opt_out": true,
@@ -181,9 +180,9 @@ const ProtectionInfo = () => {
               </div>
 
               <div className="tech-section">
-                <h4>Quality Guarantee</h4>
+                <h5>Quality guarantee</h5>
                 <p>
-                  <strong>Zero audio degradation:</strong> We only modify metadata, never the
+                  <strong>Zero audio degradation.</strong> Only metadata is modified, never the
                   audio stream itself. Your music sounds exactly the same after protection.
                 </p>
               </div>
