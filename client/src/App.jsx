@@ -55,7 +55,7 @@ function App() {
                       </div>
                     </div>
                     <a
-                      href={`http://localhost:3001${file.downloadUrl}`}
+                      href={`${import.meta.env.VITE_API_URL || ''}${file.downloadUrl}`}
                       className="btn btn-secondary btn-sm"
                       download
                     >

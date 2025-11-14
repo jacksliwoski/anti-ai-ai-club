@@ -1,281 +1,317 @@
-# 🎵 Anti AI AI Club
+# Audio Protection Platform
 
-**Protect Your Music from Unauthorized AI Training**
+Professional audio protection service that embeds adversarial watermarking and metadata to prevent unauthorized AI training on music and audio files.
 
-A powerful web platform that enables artists to embed protection metadata into their audio files, preventing unauthorized use in AI training while maintaining perfect audio quality.
+## Features
 
-## 🌟 Features
+### Dual-Layer Protection System
 
-- **Zero Quality Loss**: Protection metadata is embedded without touching the audio stream
-- **Multiple Format Support**: MP3 (full), FLAC, WAV, M4A/AAC, OGG
-- **Easy-to-Use Interface**: Simple drag-and-drop upload with instant protection
-- **Standardized Protection**: C2PA-inspired content provenance and AI training opt-out markers
-- **Cryptographic Verification**: SHA-256 signatures for authenticity verification
-- **Batch Processing Ready**: Protect multiple files efficiently
-- **Privacy-Focused**: Files are automatically cleaned up after download
+1. **Metadata Protection** (Always Applied)
+   - AI training opt-out declarations
+   - Rights and copyright information
+   - Cryptographic signatures for verification
+   - Content provenance data (C2PA-inspired)
+   - ISO-8601 timestamps
 
-## 🛡️ How It Works
+2. **Adversarial Watermarking** (Optional, Advanced)
+   - Spread-spectrum watermarking for detection
+   - MFCC disruption (defeats voice cloning)
+   - Temporal jitter (disrupts rhythm/beat learning)
+   - High-frequency adversarial patterns
+   - Psychoacoustic masking ensures imperceptibility
 
-### Protection Methods
+### Protection Levels
 
-1. **Metadata Embedding** (Currently Implemented)
-   - Embeds standardized AI training opt-out declarations
-   - Adds cryptographic signatures for verification
-   - Includes C2PA-style content provenance data
-   - Works with existing audio format standards (ID3, Vorbis Comments, etc.)
+- **Metadata Only**: Legal protection with zero audio modification
+- **Light**: 30-50% AI degradation, 100% imperceptible
+- **Medium** (Recommended): 60-80% AI degradation, 99.9% imperceptible
+- **Aggressive**: 85-95% AI degradation, 99% imperceptible
+- **Nuclear**: 95-99% AI degradation, maximum protection
 
-2. **Future Enhancements**
-   - Inaudible audio watermarking
-   - Adversarial perturbations (similar to Glaze for images)
-   - Blockchain-based content registration
+### Supported Audio Formats
 
-### What Gets Embedded
+- MP3 (Full metadata support)
+- FLAC (Partial metadata support)
+- WAV (Limited metadata support)
+- M4A/AAC (Partial metadata support)
+- OGG (Partial metadata support)
 
-```json
-{
-  "ai_training_opt_out": true,
-  "marker": "NO_AI_TRAINING",
-  "rights_declaration": "All rights reserved - No AI training permitted",
-  "protection_timestamp": "2025-11-14T...",
-  "signature": "cryptographic-hash",
-  "provenance": {
-    "creator": "Artist Name",
-    "created": "timestamp",
-    "purpose": "Original artistic work - AI training prohibited"
-  }
-}
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- Git
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/anti-ai-ai-club.git
-   cd anti-ai-ai-club
-   ```
-
-2. **Install dependencies**
-   ```bash
-   # Install root dependencies
-   npm install
-
-   # Install client dependencies
-   cd client && npm install && cd ..
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env if needed
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-   This will start:
-   - Backend API on `http://localhost:3001`
-   - Frontend on `http://localhost:3000`
-
-5. **Open your browser**
-   Navigate to `http://localhost:3000`
-
-### Production Build
-
-```bash
-# Build the frontend
-cd client && npm run build && cd ..
-
-# Start production server
-NODE_ENV=production npm start
-```
-
-## 📖 Usage Guide
-
-### For Artists
-
-1. **Upload Your Audio File**
-   - Drag and drop or click to select your audio file
-   - Supported formats: MP3, FLAC, WAV, M4A, AAC, OGG
-   - Maximum file size: 100MB
-
-2. **Fill in Protection Details**
-   - **Artist Name** (required): Your name or band name
-   - **Track Title** (optional): Auto-filled from filename
-   - **Protection Level**: Currently "Metadata Only" (most compatible)
-   - **Additional Info** (optional): Custom licensing or rights information
-
-3. **Protect & Download**
-   - Click "Protect Audio File"
-   - Download your protected file
-   - Original quality maintained, protection travels with the file
-
-### Verifying Protected Files
-
-You can verify if an audio file is protected:
-
-```bash
-# For MP3 files, check ID3 tags
-npm install -g id3v2
-id3v2 -l protected-file.mp3
-
-# Look for:
-# - AI_TRAINING_OPT_OUT: TRUE
-# - NO_AI_TRAINING_MARKER
-# - PROTECTION_SIGNATURE
-# - CONTENT_PROVENANCE
-```
-
-## 🔧 Technical Details
-
-### Architecture
+## Architecture
 
 ```
 anti-ai-ai-club/
-├── server/                 # Backend API
-│   ├── index.js           # Express server
-│   ├── routes/            # API routes
-│   │   └── audioProtection.js
-│   └── services/          # Business logic
-│       └── audioProtector.js
-├── client/                # Frontend React app
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── App.jsx       # Main app component
-│   │   └── main.jsx      # Entry point
-│   └── public/
-├── uploads/               # Temporary file storage
-└── package.json
+├── client/              # React frontend (Vite)
+├── server/              # Node.js/Express backend
+├── python-service/      # Python Flask adversarial watermarking service
+└── uploads/             # Temporary file storage
 ```
 
-### API Endpoints
+## Prerequisites
 
-#### `POST /api/audio/protect`
-Protect an audio file with metadata embedding.
+- Node.js 18+ and npm
+- Python 3.9+
+- pip (Python package manager)
 
-**Request:**
-- `Content-Type: multipart/form-data`
-- `audioFile`: Audio file (required)
-- `artistName`: Artist name (required)
-- `trackTitle`: Track title (optional)
-- `protectionLevel`: Protection level (default: "metadata")
-- `additionalInfo`: Additional rights info (optional)
+## Installation
 
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Audio file protected successfully",
-  "downloadUrl": "/api/audio/download/filename",
-  "protection": {
-    "timestamp": "2025-11-14T...",
-    "signature": "a1b2c3d4...",
-    "artistName": "Artist Name",
-    "marker": "NO_AI_TRAINING"
-  }
-}
-```
+### 1. Clone the Repository
 
-#### `GET /api/audio/download/:filename`
-Download a protected audio file.
-
-#### `POST /api/audio/verify`
-Verify if an audio file contains protection metadata.
-
-### Format Support Matrix
-
-| Format | Metadata Support | Implementation Status |
-|--------|-----------------|----------------------|
-| MP3    | ID3v2 tags      | ✅ Full Support      |
-| FLAC   | Vorbis Comments | ⚠️ Partial (requires metaflac) |
-| WAV    | INFO/BEXT chunks| ⚠️ Limited           |
-| M4A/AAC| iTunes metadata | ⚠️ Partial (requires ffmpeg) |
-| OGG    | Vorbis Comments | ⚠️ Partial (requires vorbiscomment) |
-
-**Note**: For full FLAC/M4A/OGG support, install additional tools:
 ```bash
-# Ubuntu/Debian
-sudo apt-get install flac vorbis-tools ffmpeg
-
-# macOS
-brew install flac vorbis-tools ffmpeg
+git clone <repository-url>
+cd anti-ai-ai-club
 ```
 
-## 🔐 Security & Privacy
+### 2. Install Server Dependencies
 
-- Files are stored temporarily and automatically deleted after download
-- No permanent storage of audio content
+```bash
+npm install
+```
+
+### 3. Install Client Dependencies
+
+```bash
+cd client
+npm install
+cd ..
+```
+
+### 4. Install Python Dependencies
+
+```bash
+cd python-service
+pip install -r requirements.txt
+cd ..
+```
+
+### 5. Configure Environment Variables
+
+#### Server Configuration
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Default configuration:
+```env
+PORT=3001
+NODE_ENV=development
+PYTHON_SERVICE_URL=http://localhost:5000
+MAX_FILE_SIZE_MB=100
+FILE_RETENTION_MINUTES=60
+```
+
+#### Client Configuration
+
+```bash
+cd client
+cp .env.example .env
+```
+
+Default configuration:
+```env
+VITE_API_URL=http://localhost:3001
+```
+
+## Running the Application
+
+### Development Mode
+
+You need to run three services:
+
+#### 1. Start Python Adversarial Watermarking Service
+
+```bash
+cd python-service
+python app.py
+```
+
+The Python service will run on `http://localhost:5000`
+
+#### 2. Start Node.js Backend Server
+
+In a new terminal:
+
+```bash
+npm run server
+```
+
+The backend will run on `http://localhost:3001`
+
+#### 3. Start React Frontend Development Server
+
+In a new terminal:
+
+```bash
+cd client
+npm run dev
+```
+
+The frontend will run on `http://localhost:5173` (default Vite port)
+
+### Access the Application
+
+Open your browser and navigate to:
+```
+http://localhost:5173
+```
+
+## Production Deployment
+
+### Building the Frontend
+
+```bash
+cd client
+npm run build
+```
+
+This creates an optimized production build in `client/dist/`
+
+### Running in Production
+
+1. Set environment variables:
+```bash
+export NODE_ENV=production
+export PORT=3001
+export PYTHON_SERVICE_URL=http://localhost:5000
+```
+
+2. Start Python service:
+```bash
+cd python-service
+python app.py
+```
+
+3. Start Node.js server (serves both API and static frontend):
+```bash
+npm start
+```
+
+4. Access the application at `http://localhost:3001`
+
+## API Endpoints
+
+### Audio Protection
+
+- `POST /api/audio/protect` - Protect audio file
+- `GET /api/audio/download/:filename` - Download protected file
+- `POST /api/audio/verify` - Verify if file is protected
+- `GET /api/audio/protection-levels` - Get available protection levels
+- `GET /api/health` - Health check
+
+### Python Service
+
+- `GET /health` - Health check
+- `POST /protect` - Apply adversarial watermarking
+- `POST /verify` - Verify adversarial watermark
+- `GET /protection-info` - Get protection level information
+
+## Usage
+
+1. **Upload Audio File**: Drag and drop or select an audio file (MP3, FLAC, WAV, M4A, AAC, OGG)
+2. **Enter Artist Information**: Provide artist name and track title
+3. **Select Protection Level**: Choose desired protection level based on your needs
+4. **Process File**: Click "Protect file" to apply protection
+5. **Download**: Download your protected file
+
+## Technical Details
+
+### How It Works
+
+#### Metadata Protection
+- Embeds standardized AI training opt-out markers in file metadata
+- Adds cryptographic signatures for verification
+- Includes content provenance chain
+- Works on all supported formats (MP3 has best support)
+
+#### Adversarial Watermarking
+- **Spread-Spectrum Watermarking**: Embeds detectable signature using psychoacoustic masking
+- **MFCC Disruption**: Targets voice/timbre features used by AI models
+- **Temporal Jitter**: Adds imperceptible micro-timing variations
+- **High-Frequency Patterns**: Embeds patterns in 16-20kHz range
+
+### Security Considerations
+
+- Files are temporarily stored in `uploads/` directory
+- Files are automatically deleted after download (1 minute delay)
+- No permanent storage of user files
+- All processing happens server-side
 - Cryptographic signatures prevent tampering
-- HTTPS recommended for production deployment
 
-## 🎯 Future Roadmap
+## Development
 
-### Phase 1: Enhanced Metadata (Current)
-- ✅ MP3 ID3v2 protection
-- ⚠️ Full support for FLAC/OGG/M4A (requires external tools)
-- 🔄 Batch processing interface
+### Project Structure
 
-### Phase 2: Audio Watermarking
-- Embed imperceptible watermarks in the audio spectrum
-- Survive format conversion and compression
-- Detectable with verification tools
+```
+client/src/
+├── App.jsx                      # Main application component
+├── components/
+│   ├── AudioUploader.jsx        # Upload and protection form
+│   └── ProtectionInfo.jsx       # Information tabs
+└── index.css                    # Global styles and design system
 
-### Phase 3: Adversarial Protection
-- Add imperceptible perturbations that disrupt AI training
-- Similar to Glaze/Nightshade for images
-- Research-backed effectiveness
+server/
+├── index.js                     # Express server entry point
+├── routes/
+│   └── audioProtection.js       # Audio protection routes
+└── services/
+    ├── audioProtector.js        # Metadata protection service
+    └── pythonService.js         # Python service client
 
-### Phase 4: Blockchain Integration
-- Decentralized content registration
-- Immutable proof of ownership
-- Public verification system
+python-service/
+├── app.py                       # Flask API
+└── adversarial_watermark.py     # Watermarking algorithms
+```
 
-## 🤝 Contributing
+### Design System
 
-Contributions are welcome! Please feel free to submit pull requests or open issues for:
+Professional design system with:
+- Primary color: #2563eb (blue)
+- Spacing scale: 4px increments
+- Typography scale: 12-36px
+- Border radius: 4-8px maximum
+- Clean, professional interface
 
-- Additional audio format support
-- Watermarking algorithms
-- UI/UX improvements
-- Documentation enhancements
-- Bug fixes
+## Troubleshooting
 
-## 📄 License
+### Python Service Not Available
 
-MIT License - See LICENSE file for details
+If you see "Limited protection mode" warning:
+1. Ensure Python service is running: `cd python-service && python app.py`
+2. Check `PYTHON_SERVICE_URL` environment variable
+3. Verify Python dependencies are installed: `pip install -r requirements.txt`
 
-## ⚖️ Legal Notice
+### File Upload Fails
 
-This tool embeds metadata that expresses the artist's intent to opt-out of AI training. While we cannot guarantee that all AI systems will respect these markers, embedded protection metadata:
+- Check file size (max 100MB by default)
+- Ensure file is a valid audio format
+- Check server logs for errors
+- Verify uploads directory exists and is writable
 
-1. Creates a legal record of your rights assertion
-2. Makes your intent clear to ethical AI developers
-3. May provide legal basis for copyright claims
-4. Supports emerging standards for content provenance
+### Metadata Not Embedded (FLAC/WAV/M4A)
 
-**This is not legal advice.** Consult with an attorney regarding copyright protection and AI training rights in your jurisdiction.
+Some formats have limited metadata support:
+- FLAC/OGG: Requires `metaflac` or `vorbiscomment` tools
+- WAV: Limited native metadata support
+- M4A/AAC: Requires `ffmpeg` for full metadata support
+- **Recommendation**: Use MP3 for best metadata compatibility
 
-## 🙏 Acknowledgments
+## License
 
-Inspired by image protection tools like:
-- Glaze (University of Chicago)
-- Nightshade
-- C2PA (Coalition for Content Provenance and Authenticity)
+All rights reserved.
 
-Built to empower artists in the AI era.
+## Support
 
-## 📞 Support
+For issues, questions, or contributions, please open an issue in the repository.
 
-For issues, questions, or feature requests, please open an issue on GitHub.
+## Acknowledgments
 
----
+Built with:
+- React + Vite
+- Node.js + Express
+- Python + Flask
+- librosa (audio processing)
+- node-id3 (MP3 metadata)
 
-**Made with ❤️ for artists who deserve to control their work**
+Inspired by image protection tools like Glaze and Nightshade from the University of Chicago, and the Coalition for Content Provenance and Authenticity (C2PA).

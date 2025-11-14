@@ -39,6 +39,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT, () => {
-  console.log(`🎵 Audio Protection Server running on port ${PORT}`);
-  console.log(`📡 API available at http://localhost:${PORT}/api`);
+  console.log(`Audio Protection Server running on port ${PORT}`);
+  console.log(`API available at http://localhost:${PORT}/api`);
 });
