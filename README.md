@@ -52,6 +52,8 @@ Then visit `http://localhost:5173` and you'll have all 5 protection levels avail
 - **Aggressive**: 85-95% AI degradation, 99% imperceptible
 - **Nuclear**: 95-99% AI degradation, maximum protection
 
+📖 **Want details?** See [PROTECTION_LEVELS.md](./PROTECTION_LEVELS.md) for a complete explanation of what each level does to your audio files and when to use each one.
+
 ### Supported Audio Formats
 
 - MP3 (Full metadata support)
