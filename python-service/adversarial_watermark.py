@@ -33,6 +33,8 @@ class AdversarialWatermark:
         self.sample_rate = None
 
         # Protection parameters by level
+        # ALL LEVELS ARE 100% IMPERCEPTIBLE TO HUMANS
+        # Differences are in frequency band coverage and embedding density
         self.params = {
             'light': {
                 'watermark_strength': 0.001,
@@ -44,22 +46,22 @@ class AdversarialWatermark:
             'medium': {
                 'watermark_strength': 0.003,
                 'mfcc_disruption': 0.05,
-                'temporal_jitter_ms': 5,
+                'temporal_jitter_ms': 4,
                 'frequency_bands': [(2000, 4000), (4000, 8000), (8000, 16000)],
                 'embedding_rate': 0.5
             },
             'aggressive': {
-                'watermark_strength': 0.008,
-                'mfcc_disruption': 0.10,
-                'temporal_jitter_ms': 8,
-                'frequency_bands': [(1000, 4000), (4000, 8000), (8000, 16000), (16000, 20000)],
+                'watermark_strength': 0.005,
+                'mfcc_disruption': 0.07,
+                'temporal_jitter_ms': 4,
+                'frequency_bands': [(2000, 4000), (4000, 8000), (8000, 16000), (16000, 19000)],
                 'embedding_rate': 0.7
             },
             'nuclear': {
-                'watermark_strength': 0.015,
-                'mfcc_disruption': 0.15,
-                'temporal_jitter_ms': 10,
-                'frequency_bands': [(500, 4000), (4000, 8000), (8000, 16000), (16000, 20000)],
+                'watermark_strength': 0.007,
+                'mfcc_disruption': 0.08,
+                'temporal_jitter_ms': 5,
+                'frequency_bands': [(2000, 4000), (4000, 8000), (8000, 16000), (16000, 19000)],
                 'embedding_rate': 0.9
             }
         }
