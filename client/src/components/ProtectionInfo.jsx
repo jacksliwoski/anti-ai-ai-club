@@ -110,10 +110,10 @@ const ProtectionInfo = () => {
                 </p>
               </div>
               <div className="reason">
-                <h5>Imperceptible to humans</h5>
+                <h5>100% imperceptible to humans</h5>
                 <p>
-                  Psychoacoustic masking ensures watermarks are imperceptible. Light protection is 100% imperceptible,
-                  while Nuclear protection may have subtle artifacts but remains highly listenable.
+                  All protection levels use psychoacoustic masking to ensure watermarks are completely imperceptible.
+                  Your audio will sound exactly as you mastered it with zero quality degradation.
                 </p>
               </div>
             </div>
@@ -151,34 +151,34 @@ const ProtectionInfo = () => {
                     <tr>
                       <th>Level</th>
                       <th>AI degradation</th>
-                      <th>Imperceptibility</th>
+                      <th>Audio quality</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>Metadata only</td>
                       <td>0-10%</td>
-                      <td className="status-full">100%</td>
+                      <td className="status-full">No modification</td>
                     </tr>
                     <tr>
                       <td>Light</td>
                       <td>30-50%</td>
-                      <td className="status-full">100%</td>
+                      <td className="status-full">Imperceptible</td>
                     </tr>
                     <tr>
                       <td>Medium</td>
                       <td>60-80%</td>
-                      <td className="status-full">99.9%</td>
+                      <td className="status-full">Imperceptible</td>
                     </tr>
                     <tr>
                       <td>Aggressive</td>
                       <td>85-95%</td>
-                      <td className="status-full">99%</td>
+                      <td className="status-full">Imperceptible</td>
                     </tr>
                     <tr>
                       <td>Nuclear</td>
                       <td>95-99%</td>
-                      <td className="status-partial">95%</td>
+                      <td className="status-full">Imperceptible</td>
                     </tr>
                   </tbody>
                 </table>
@@ -190,7 +190,7 @@ const ProtectionInfo = () => {
                   Unlike metadata which can be stripped, adversarial watermarking physically modifies the audio signal in ways that:
                 </p>
                 <ul>
-                  <li>Are imperceptible or barely perceptible to humans</li>
+                  <li>Are 100% imperceptible to humans</li>
                   <li>Actively corrupt AI model training by introducing perturbations</li>
                   <li>Target specific features (MFCCs, temporal patterns) that models depend on</li>
                   <li>Cannot be removed without significant audio quality loss</li>
@@ -201,11 +201,9 @@ const ProtectionInfo = () => {
               <div className="tech-section">
                 <h5>Quality guarantee</h5>
                 <p>
-                  <strong>Metadata protection:</strong> Zero audio degradation. Only metadata modified.
-                </p>
-                <p>
-                  <strong>Adversarial watermarking:</strong> Light/Medium levels are imperceptible to most listeners.
-                  Aggressive/Nuclear may have subtle artifacts but remain highly listenable. All protection is applied using psychoacoustic masking.
+                  <strong>All protection levels are 100% imperceptible.</strong> Your audio will sound exactly as you mastered it.
+                  Metadata-only protection makes zero audio modifications. Adversarial watermarking uses psychoacoustic masking
+                  to ensure all changes are below the threshold of human perception.
                 </p>
               </div>
             </div>

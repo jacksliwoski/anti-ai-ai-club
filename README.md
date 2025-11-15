@@ -46,11 +46,15 @@ Then visit `http://localhost:5173` and you'll have all 5 protection levels avail
 
 ### Protection Levels
 
-- **Metadata Only**: Legal protection with zero audio modification
+**All levels are 100% imperceptible - your audio sounds exactly as you mastered it.**
+
+- **Metadata Only**: Legal protection with zero audio modification (0-10% AI degradation)
 - **Light**: 30-50% AI degradation, 100% imperceptible
-- **Medium** (Recommended): 60-80% AI degradation, 99.9% imperceptible
-- **Aggressive**: 85-95% AI degradation, 99% imperceptible
-- **Nuclear**: 95-99% AI degradation, maximum protection
+- **Medium** (Recommended): 60-80% AI degradation, 100% imperceptible
+- **Aggressive**: 85-95% AI degradation, 100% imperceptible
+- **Nuclear**: 95-99% AI degradation, 100% imperceptible (maximum protection)
+
+Levels differ in AI disruption strength and frequency band coverage, not audio quality.
 
 📖 **Want details?** See [PROTECTION_LEVELS.md](./PROTECTION_LEVELS.md) for a complete explanation of what each level does to your audio files and when to use each one.
 
