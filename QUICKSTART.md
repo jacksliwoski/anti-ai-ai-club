@@ -97,14 +97,31 @@ This runs:
 
 ## Troubleshooting
 
+### Python 3.13 Compatibility Issues
+
+If you're using **Python 3.13** (very new) and getting build errors, the updated requirements.txt should fix it. If you still have issues:
+
+**Option 1: Let pip find compatible versions**
+```bash
+cd python-service
+pip install numpy scipy librosa soundfile flask flask-cors setuptools
+cd ..
+```
+
+**Option 2: Use Python 3.11 or 3.12 (Recommended)**
+Python 3.11 or 3.12 have better compatibility with scientific packages. Install from [python.org](https://www.python.org/downloads/) and use:
+```bash
+python3.11 -m pip install -r python-service/requirements.txt
+```
+
 ### Python service won't start
 ```bash
-# Check Python version (need 3.9+)
-python3 --version
+# Check Python version (3.9-3.12 recommended, 3.13 experimental)
+python --version
 
 # Install dependencies manually
 cd python-service
-pip install numpy scipy librosa soundfile flask flask-cors
+pip install -r requirements.txt
 cd ..
 ```
 
