@@ -2,6 +2,30 @@
 
 Professional audio protection service that embeds adversarial watermarking and metadata to prevent unauthorized AI training on music and audio files.
 
+## 🚀 Quick Start - Enable ALL Protections
+
+**Want full adversarial protection (30-99% AI degradation)?** See [QUICKSTART.md](./QUICKSTART.md)
+
+**TL;DR:** Run this command to start all services:
+```bash
+./start.sh
+```
+or
+```bash
+npm run dev
+```
+
+This starts:
+- ✅ Python adversarial watermarking service (port 5000)
+- ✅ Node.js backend API (port 3001)
+- ✅ React frontend (port 5173)
+
+Then visit `http://localhost:5173` and you'll have all 5 protection levels available (Metadata, Light, Medium, Aggressive, Nuclear).
+
+**Without the Python service**, you only get metadata-only protection. Read [QUICKSTART.md](./QUICKSTART.md) for details.
+
+---
+
 ## Features
 
 ### Dual-Layer Protection System
