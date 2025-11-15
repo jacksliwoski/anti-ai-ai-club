@@ -15,17 +15,17 @@ function App() {
       <header className="app-header">
         <div className="header-content">
           <h1>Audio Protection Platform</h1>
-          <p className="tagline">Protect your music from unauthorized AI training</p>
+          <p className="tagline">Dual-layer protection against unauthorized AI training</p>
         </div>
       </header>
 
       <main className="main-content">
         <div className="container">
           <section className="hero-section">
-            <h2>Safeguard your artistic rights</h2>
+            <h2>Protect your music from AI exploitation</h2>
             <p>
-              Add adversarial protection to your audio files that actively disrupts unauthorized
-              AI training while maintaining perfect audio quality.
+              Embed legal opt-out declarations plus adversarial watermarking that actively poisons
+              AI training data. Your audio remains imperceptible to humans while becoming toxic to machine learning models.
             </p>
           </section>
 
