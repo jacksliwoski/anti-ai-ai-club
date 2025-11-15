@@ -8,17 +8,14 @@ echo "Audio Protection Platform - Starting"
 echo "======================================"
 echo ""
 
-# Check if Python dependencies are installed
-echo "Checking Python dependencies..."
-if ! python3 -c "import flask" 2>/dev/null; then
-    echo "Installing Python dependencies..."
-    cd python-service
-    pip install -r requirements.txt
-    cd ..
-fi
+# Install Python dependencies
+echo "Installing Python dependencies..."
+cd python-service
+pip install -r requirements.txt
+cd ..
 
 # Check if Node dependencies are installed
-echo "Checking Node dependencies..."
+echo "Installing Node dependencies..."
 if [ ! -d "node_modules" ]; then
     echo "Installing server dependencies..."
     npm install

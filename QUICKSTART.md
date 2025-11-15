@@ -10,12 +10,18 @@ By default, you're seeing **metadata-only protection**. This happens when the Py
 
 ### Option 1: One-Command Startup (Recommended)
 
+**On Windows:**
+```bash
+start.bat
+```
+
+**On Mac/Linux:**
 ```bash
 ./start.sh
 ```
 
 This automatically:
-- Installs Python dependencies if needed
+- Installs ALL Python dependencies (flask, flask-cors, librosa, numpy, scipy, etc.)
 - Installs Node dependencies if needed
 - Starts all 3 services (Python, Backend, Frontend)
 
